@@ -13,7 +13,7 @@ pub struct CrankRow {
 unsafe impl Pod for CrankRow {}
 unsafe impl Zeroable for CrankRow {}
 
-#[account(zero_copy)]
+#[account(zero_copy(unsafe))]
 #[repr(packed)]
 pub struct CrankAccountData {
     /// Name of the crank to store on-chain.

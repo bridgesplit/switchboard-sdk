@@ -54,7 +54,7 @@ pub enum AggregatorResolutionMode {
     ModeRoundResolution = 0,
     ModeSlidingResolution = 1,
 }
-#[account(zero_copy)]
+#[account(zero_copy(unsafe))]
 #[repr(packed)]
 pub struct SlidingResultAccountData {
     pub data: [SlidingWindowElement; 16],
@@ -72,7 +72,7 @@ pub struct SlidingWindowElement {
 }
 
 // #[zero_copy]
-#[account(zero_copy)]
+#[account(zero_copy(unsafe))]
 #[repr(packed)]
 #[derive(Debug, PartialEq)]
 pub struct AggregatorAccountData {
