@@ -2,6 +2,8 @@ use super::error::SwitchboardError;
 use super::SWITCHBOARD_PROGRAM_ID;
 use anchor_lang::prelude::*;
 use anchor_lang::{Discriminator, Owner};
+use bytemuck::{Pod, Zeroable};
+use std::io::Read;
 
 #[derive(AnchorDeserialize, Default, Debug)]
 pub struct BufferRelayerAccountData {
@@ -29,8 +31,7 @@ pub struct BufferRelayerAccountData {
     pub result: Vec<u8>,
 }
 
-#[zero_copy]
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Copy, Clone)]
 pub struct BufferRelayerRound {
     /// Number of successful responses.
     pub num_success: u32,
@@ -44,6 +45,54 @@ pub struct BufferRelayerRound {
     pub oracle_pubkey: Pubkey,
 }
 
+// Ensure that BufferRelayerRound is Zeroable and Pod which are required for zero-copy.
+unsafe impl Zeroable for BufferRelayerRound {}
+unsafe impl Pod for BufferRelayerRound {}
+impl IdlBuild for BufferRelayerRound {}
+
+impl AnchorSerialize for BufferRelayerRound {
+    fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        self.num_success.serialize(writer)?;
+        self.num_error.serialize(writer)?;
+        self.round_open_slot.serialize(writer)?;
+        self.round_open_timestamp.serialize(writer)?;
+        self.oracle_pubkey.serialize(writer)?;
+        Ok(())
+    }
+}
+
+impl AnchorDeserialize for BufferRelayerRound {
+    fn deserialize_reader<R: std::io::Read>(
+        reader: &mut R,
+    ) -> std::result::Result<Self, std::io::Error> {
+        let mut buffer = [0u8; 4]; // Buffer for reading u32
+        reader.read_exact(&mut buffer)?;
+        let num_success = u32::from_le_bytes(buffer);
+
+        reader.read_exact(&mut buffer)?;
+        let num_error = u32::from_le_bytes(buffer);
+
+        let mut buffer_64 = [0u8; 8]; // Buffer for reading u64
+        reader.read_exact(&mut buffer_64)?;
+        let round_open_slot = u64::from_le_bytes(buffer_64);
+
+        let mut buffer_i64 = [0u8; 8]; // Buffer for reading i64
+        reader.read_exact(&mut buffer_i64)?;
+        let round_open_timestamp = i64::from_le_bytes(buffer_i64);
+
+        let mut pubkey_bytes = [0u8; 32]; // Buffer for reading Pubkey
+        reader.read_exact(&mut pubkey_bytes)?;
+        let oracle_pubkey = Pubkey::new_from_array(pubkey_bytes);
+
+        Ok(Self {
+            num_success,
+            num_error,
+            round_open_slot,
+            round_open_timestamp,
+            oracle_pubkey,
+        })
+    }
+}
 impl BufferRelayerAccountData {
     /// Returns the deserialized Switchboard Buffer Relayer account
     ///

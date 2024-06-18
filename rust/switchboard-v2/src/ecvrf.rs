@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 use anchor_lang::prelude::*;
 use bytemuck::{Pod, Zeroable};
+use std::io::Read;
 
 #[zero_copy(unsafe)]
 #[repr(packed)]
@@ -10,13 +11,48 @@ pub struct AccountMetaZC {
     pub is_writable: bool,
 }
 
-#[zero_copy(unsafe)]
 #[repr(packed)]
-#[derive(AnchorSerialize, AnchorDeserialize)]
+#[derive(Debug, Copy, Clone)]
 pub struct AccountMetaBorsh {
     pub pubkey: Pubkey,
     pub is_signer: bool,
     pub is_writable: bool,
+}
+
+// Ensure that AccountMetaBorsh is Zeroable and Pod which are required for zero-copy.
+unsafe impl Zeroable for AccountMetaBorsh {}
+unsafe impl Pod for AccountMetaBorsh {}
+impl IdlBuild for AccountMetaBorsh {}
+
+impl AnchorSerialize for AccountMetaBorsh {
+    fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        self.pubkey.serialize(writer)?;
+        self.is_signer.serialize(writer)?;
+        self.is_writable.serialize(writer)?;
+        Ok(())
+    }
+}
+
+impl AnchorDeserialize for AccountMetaBorsh {
+    // Implementing the required method deserialize_reader
+    fn deserialize_reader<R: Read>(reader: &mut R) -> std::result::Result<Self, std::io::Error> {
+        let mut pubkey_bytes = [0u8; 32]; // Assuming Pubkey is 32 bytes
+        reader.read_exact(&mut pubkey_bytes)?;
+        let pubkey = Pubkey::new_from_array(pubkey_bytes);
+
+        let mut bool_bytes = [0u8; 1];
+        reader.read_exact(&mut bool_bytes)?;
+        let is_signer = bool_bytes[0] != 0;
+
+        reader.read_exact(&mut bool_bytes)?;
+        let is_writable = bool_bytes[0] != 0;
+
+        Ok(Self {
+            pubkey,
+            is_signer,
+            is_writable,
+        })
+    }
 }
 
 #[zero_copy(unsafe)]
@@ -100,6 +136,8 @@ impl std::fmt::Display for VrfStatus {
         }
     }
 }
+
+impl IdlBuild for VrfStatus {}
 
 #[zero_copy(unsafe)]
 #[repr(packed)]
