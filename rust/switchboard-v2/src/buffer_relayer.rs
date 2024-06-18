@@ -30,7 +30,7 @@ pub struct BufferRelayerAccountData {
 }
 
 #[zero_copy]
-#[derive(Default, Debug, AnchorSerialize, AnchorDeserialize)]
+#[derive(Default, Debug)]
 pub struct BufferRelayerRound {
     /// Number of successful responses.
     pub num_success: u32,
