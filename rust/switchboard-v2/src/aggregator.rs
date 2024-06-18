@@ -5,7 +5,7 @@ use anchor_lang::Discriminator;
 use rust_decimal::Decimal;
 use std::cell::Ref;
 
-#[zero_copy]
+#[zero_copy(unsafe)]
 #[repr(packed)]
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct Hash {
@@ -13,7 +13,7 @@ pub struct Hash {
     pub data: [u8; 32],
 }
 
-#[zero_copy]
+#[zero_copy(unsafe)]
 #[repr(packed)]
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct AggregatorRound {
@@ -61,7 +61,7 @@ pub struct SlidingResultAccountData {
     pub bump: u8,
     pub _ebuf: [u8; 512],
 }
-#[zero_copy]
+#[zero_copy(unsafe)]
 #[derive(Default)]
 #[repr(packed)]
 pub struct SlidingWindowElement {
@@ -71,7 +71,7 @@ pub struct SlidingWindowElement {
     pub timestamp: i64,
 }
 
-// #[zero_copy]
+// #[zero_copy(unsafe)]
 #[account(zero_copy(unsafe))]
 #[repr(packed)]
 #[derive(Debug, PartialEq)]

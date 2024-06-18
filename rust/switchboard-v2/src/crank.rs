@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use bytemuck::{Pod, Zeroable};
 
-#[zero_copy]
+#[zero_copy(unsafe)]
 #[derive(Default)]
 #[repr(packed)]
 pub struct CrankRow {
