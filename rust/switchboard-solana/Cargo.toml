@@ -24,27 +24,29 @@ ipfs = ["switchboard-common/ipfs"]
 all = ["secrets", "ipfs"]
 
 [dependencies]
-anchor-spl = { version = "=0.30.0", features = ["idl-build"]}
-anchor-lang = { version = "=0.30.0", features = ["init-if-needed", "event-cpi", "idl-build"] }
-solana-program = "1.18.17"
-solana-address-lookup-table-program = "1.18.17"
+anchor-spl = { version = "=0.30.0", features = ["idl-build"] }
+anchor-lang = { version = "=0.30.0", features = [
+    "init-if-needed",
+    "event-cpi",
+    "idl-build",
+] }
+solana-program = "1.18.11"
+solana-address-lookup-table-program = "1.18.11"
 rust_decimal = "^1"
 bytemuck = "^1"
 superslice = "1"
 log = { version = "0.4", features = ["kv_unstable", "kv_unstable_std"] }
 kv-log-macro = "1.0"
-ahash=">=0.8.9"
+ahash = ">=0.8.9"
 
 [target.'cfg(target_os = "solana")'.dependencies]
 switchboard-common = { version = "0.11.0" }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-switchboard-common = { version = "0.11.0", features = [
-    "client",
-] }
+switchboard-common = { version = "0.11.0", features = ["client"] }
 anchor-client = { version = "=0.30.0", features = ["async"] }
-solana-client =  "1.18.17"
-solana-account-decoder =  "1.18.17"
+solana-client = "1.18.11"
+solana-account-decoder = "1.18.11"
 base64 = "0.21.4"
 bincode = { version = "^1" }
 sgx-quote = { version = "0.1.0" }
