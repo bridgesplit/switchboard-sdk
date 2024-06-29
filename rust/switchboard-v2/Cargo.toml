@@ -16,18 +16,16 @@ name = "switchboard_v2"
 doctest = false
 
 [features]
-default = ["cpi"]
+default = ["cpi", "no-idl"]
 no-entrypoint = []
+no-idl = []
 cpi = ["no-entrypoint"]
 
 [dependencies]
 rust_decimal = "=1.35.0"
 bytemuck = "1.13.1"
 superslice = "1"
-solana-program = "1.18.17"
-# anchor-lang = "0.27.0"
-# anchor-spl = "0.27.0"
-# https://github.com/coral-xyz/anchor/issues/2502
+solana-program = "1.18.14"
 anchor-spl = { version = "=0.30.0", features = ["idl-build"] }
 anchor-lang = { version = "=0.30.0", features = [
     "init-if-needed",

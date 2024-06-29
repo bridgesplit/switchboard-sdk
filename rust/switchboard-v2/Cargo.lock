@@ -183,9 +183,9 @@ dependencies = [
 
 [[package]]
 name = "anchor-lang"
-version = "0.30.1"
+version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6620c9486d9d36a4389cab5e37dc34a42ed0bfaa62e6a75a2999ce98f8f2e373"
+checksum = "e41feb9c1cd9f4b0fad1c004fc8f289183f3ce27e9db38fa6e434470c716fb1e"
 dependencies = [
  "anchor-attribute-access-control",
  "anchor-attribute-account",
@@ -234,9 +234,9 @@ dependencies = [
 
 [[package]]
 name = "anchor-spl"
-version = "0.30.1"
+version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04bd077c34449319a1e4e0bc21cea572960c9ae0d0fefda0dd7c52fcc3c647a3"
+checksum = "0dcee54a30b27ea8317ca647759b5d9701a8c7caaaa0c922c6d3c306a7278a7a"
 dependencies = [
  "anchor-lang",
  "spl-associated-token-account",
