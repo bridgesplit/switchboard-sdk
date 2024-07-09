@@ -900,6 +900,8 @@ dependencies = [
  "solana-address-lookup-table-program",
  "solana-client",
  "solana-program",
+ "solana-zk-token-sdk",
+ "subtle",
  "superslice",
  "switchboard-common",
  "tokio",
