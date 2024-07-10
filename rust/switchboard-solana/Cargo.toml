@@ -22,15 +22,13 @@ cpi = ["no-entrypoint"]
 secrets = ["rand", "rsa", "reqwest"]
 ipfs = ["switchboard-common/ipfs"]
 all = ["secrets", "ipfs"]
+idl-build = ["anchor-spl/idl-build", "anchor-lang/idl-build"]
 
 [dependencies]
-anchor-spl = { git = "https://github.com/bridgesplit/anchor", features = [
-    "idl-build",
-] }
+anchor-spl = { git = "https://github.com/bridgesplit/anchor", features = [] }
 anchor-lang = { git = "https://github.com/bridgesplit/anchor", features = [
     "init-if-needed",
     "event-cpi",
-    "idl-build",
 ] }
 solana-program = "1.18.17"
 solana-address-lookup-table-program = "1.18.17"
