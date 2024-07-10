@@ -48,6 +48,7 @@ pub struct BufferRelayerRound {
 // Ensure that BufferRelayerRound is Zeroable and Pod which are required for zero-copy.
 unsafe impl Zeroable for BufferRelayerRound {}
 unsafe impl Pod for BufferRelayerRound {}
+#[cfg(feature = "idl-build")]
 impl IdlBuild for BufferRelayerRound {}
 
 impl AnchorSerialize for BufferRelayerRound {

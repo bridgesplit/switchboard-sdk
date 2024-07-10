@@ -2,7 +2,7 @@
 
 use crate::prelude::*;
 use bytemuck::{Pod, Zeroable};
- use std::io::Read;
+use std::io::Read;
 
 #[zero_copy(unsafe)]
 #[repr(packed)]
@@ -23,6 +23,7 @@ pub struct AccountMetaBorsh {
 // Ensure that AccountMetaBorsh is Zeroable and Pod which are required for zero-copy.
 unsafe impl Zeroable for AccountMetaBorsh {}
 unsafe impl Pod for AccountMetaBorsh {}
+#[cfg(feature = "idl-build")]
 impl IdlBuild for AccountMetaBorsh {}
 
 impl AnchorSerialize for AccountMetaBorsh {
@@ -138,8 +139,8 @@ impl std::fmt::Display for VrfStatus {
     }
 }
 
+#[cfg(feature = "idl-build")]
 impl IdlBuild for VrfStatus {}
-
 
 #[zero_copy(unsafe)]
 #[repr(packed)]
