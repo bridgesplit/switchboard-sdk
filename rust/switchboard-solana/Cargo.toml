@@ -24,8 +24,10 @@ ipfs = ["switchboard-common/ipfs"]
 all = ["secrets", "ipfs"]
 
 [dependencies]
-anchor-spl = { version = "0.30.1", features = ["idl-build"] }
-anchor-lang = { version = "0.30.1", features = [
+anchor-spl = { git = "https://github.com/bridgesplit/anchor", features = [
+    "idl-build",
+] }
+anchor-lang = { git = "https://github.com/bridgesplit/anchor", features = [
     "init-if-needed",
     "event-cpi",
     "idl-build",
@@ -46,7 +48,9 @@ switchboard-common = { version = "0.11.0" }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 switchboard-common = { version = "0.11.0", features = ["client"] }
-anchor-client = { version = "0.30.1", features = ["async"] }
+anchor-client = { git = "https://github.com/bridgesplit/anchor", features = [
+    "async",
+] }
 solana-client = "1.18.17"
 solana-account-decoder = "1.18.17"
 base64 = "0.21.4"
