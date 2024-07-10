@@ -26,8 +26,10 @@ rust_decimal = "=1.35.0"
 bytemuck = "1.13.1"
 superslice = "1"
 solana-program = "=1.18.17"
-anchor-spl = { version = "0.30.1", features = ["idl-build"] }
-anchor-lang = { version = "0.30.1", features = [
+anchor-spl = { git = "https://github.com/bridgesplit/anchor", features = [
+    "idl-build",
+] }
+anchor-lang = { git = "https://github.com/bridgesplit/anchor", features = [
     "init-if-needed",
     "event-cpi",
     "idl-build",
