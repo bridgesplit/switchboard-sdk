@@ -27,11 +27,8 @@ rust_decimal = "=1.35.0"
 bytemuck = "1.13.1"
 superslice = "1"
 solana-program = "=1.18.17"
-anchor-spl = { git = "https://github.com/bridgesplit/anchor", features = [] }
-anchor-lang = { git = "https://github.com/bridgesplit/anchor", features = [
-    "init-if-needed",
-    "event-cpi",
-] }
+anchor-spl = { version = "0.30.1", features = [] }
+anchor-lang = { version = "0.30.1", features = ["init-if-needed", "event-cpi"] }
 # toml_datetime = "=0.6.1"
 # winnow = "=0.4.1"
 # toml_edit = "=0.19.8"
