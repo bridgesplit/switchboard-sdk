@@ -144,7 +144,6 @@ impl BufferRelayerAccountData {
     ) -> anchor_lang::Result<()> {
         let staleness = unix_timestamp - self.latest_confirmed_round.round_open_timestamp;
         if staleness > max_staleness {
-            msg!("Feed has not been updated in {} seconds!", staleness);
             return Err(SwitchboardError::StaleFeed.into());
         }
         Ok(())
